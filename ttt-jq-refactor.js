@@ -1,17 +1,17 @@
-// Tic Tac Toe
+// Tic Tac Toe - jQuery Refactor
+// Vanilla JS is commented ABOVE its jQuery counterpart
+// jQuery alternatives commented BELOW.  Look for 'or: ... '
 
 //window.addEventListener('load', function () {
 $(document).ready(function() {
 
   // Grab all the necessary elements
-  //var squares = document.querySelectorAll('.square p');
+  // var squares = document.querySelectorAll('.square p');
   var $squares = $('.square p');
-  console.log($squares);
-
   // var squareBorders = document.querySelectorAll('.square');
   var $squareBorders = $('.square');
-  var reset = document.querySelector('.reset');
-  // var reset = $('.reset');
+  // var reset = document.querySelector('.reset');
+  var $reset = $('.reset');
   // var playerX = document.querySelector('#player_x');
   var $playerX = $('#player_x');
   // var playerO = document.querySelector('#player_o');
@@ -29,25 +29,18 @@ $(document).ready(function() {
   // Disallow repeated moves on the same square
   // Disallow moves after the game has been won
   // for (var i = 0; i < squares.length; i++) {
-  //   squares[i].addEventListener('click', function(event) {
-  //   if (event.target.innerHTML === '' && turn !== 'game_over') {  // square hasn't been played
-  //     setSquare(event.target);
-  //       checkGameStatus();
-  //     }
-  //     else if (turn === 'game_over') {
-  //       alert("The game is over!  Click 'reset' to play again.");
-  //     }
-  //     else {
-  //       alert('That square has already been played!');
-  //     }
-  //   });
-  // }
-  $squares.each(function() {
-    console.log($(this));
+  $squares.each(function(index) {
+  // NOTE: index is optional.  If passed as an argument, you will have access to the
+  // index of each element you are iterating over (0, 1, 2, 3, etc.)
+    // squares[i].addEventListener('click', function(event) {
     $(this).on('click', function() {
-      console.log($(this));
-      if ($(this).html() === '' && turn !== 'game_over') {  // square hasn't been played
+    // or: $(this).on('click', function(event))
+      // if (event.target.innerHTML === '' && turn !== 'game_over') {  // square hasn't been played
+      if ($(this).html() === '' && turn !== 'game_over') {
+      // or: if (event.target.html() === '' && turn !== 'game_over') {
+        // setSquare(event.target);
         setSquare($(this));
+        // or: setSquare(event.target);
         checkGameStatus();
       }
       else if (turn === 'game_over') {
@@ -67,33 +60,38 @@ $(document).ready(function() {
   //     // reset any highlighted winning squares
   //     squareBorders[i].setAttribute('class', 'square');
   //   }
-  //   // X always goes first
-  //   turn = 'X';
-  //   // set the turn indicator
-  //   displayTurn();
-  //   // keep track of how many moves have been made
-  //   // max 9 before a win or tie
-  //   playCount = 0;
-  // });
+  $reset.on('click', function() {
+  // or: $reset.on('click', function(event) {
+    $squares.each(function() {
+    // or: $squares.each(function($el) {
+      $(this).html('');
+      // or:
+      $(this).removeClass().addClass('blank');
+    });
+    $squareBorders.each(function() {
+      $(this).removeClass().addClass('square');
+    });
+    // X always goes first
+    turn = 'X';
+    // set the turn indicator
+    displayTurn();
+    // keep track of how many moves have been made
+    // max 9 before a win or tie
+    playCount = 0;
+  });
 
-
-  // square is a p element
-  // function setSquare(square) {
-  //   square.innerHTML = turn;  // turn = X or O
-  //   square.setAttribute('class', turn);
-  //   turn === 'X' ? turn = 'O' : turn = 'X';
-  // }
   function setSquare($square) {
+    // square.innerHTML = turn;  // turn = X or O
     $square.html(turn);
+    // square.setAttribute('class', turn);
     $square.removeClass().addClass(turn);
     turn === 'X' ? turn = 'O' : turn = 'X';
   }
 
   function checkGameStatus() {
     var winner;  // a string to indicate the winner and winning squares, e.g. 'X012'
-    if (winner = getWinner()) {
+    if (winner = getWinner())
       gameOver(winner);
-    }
     else if (++playCount === 9)
       gameOver('tie');
     // game still going, switch turn
@@ -193,7 +191,6 @@ $(document).ready(function() {
       // case '6': return squares[6].innerHTML + '6';
       // case '7': return squares[7].innerHTML + '7';
       // case '8': return squares[8].innerHTML + '8';
-
       case '0': return $squares.eq(0).html() + '0';
       case '1': return $squares.eq(1).html() + '1';
       case '2': return $squares.eq(2).html() + '2';
@@ -218,4 +215,3 @@ $(document).ready(function() {
   }
 
 });
-
