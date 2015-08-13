@@ -1,3 +1,6 @@
+- master branch is pure JS
+- see 'jq_refactor' branch for a jQuery implementation
+
 #Week 1 Project - Tic Tac Toe
 
 **Objective:** Build a tic taco game in HTML and pure javascript.
