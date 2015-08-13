@@ -34,6 +34,7 @@ $(document).ready(function() {
   // index of each element you are iterating over (0, 1, 2, 3, etc.)
     // squares[i].addEventListener('click', function(event) {
     $(this).on('click', function() {
+      console.log(index);
     // or: $(this).on('click', function(event))
       // if (event.target.innerHTML === '' && turn !== 'game_over') {  // square hasn't been played
       if ($(this).html() === '' && turn !== 'game_over') {
